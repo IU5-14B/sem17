@@ -6,13 +6,16 @@ int main() {
 
     buildHeapTopDown(data);
     std::cout << std::endl;
+
     buildHeapBottomUp(data);
-
     std::cout << std::endl;
+
     heapSortChars("SORTING");
-
     std::cout << std::endl;
-    std::cout << "Heap sort is NOT stable: equal elements may change their order." << std::endl;
+
+    std::cout << "Пирамидальная сортировка не является устойчивой: "
+              << "равные элементы могут менять взаимный порядок."
+              << std::endl;
 
     return 0;
 }

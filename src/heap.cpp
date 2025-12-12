@@ -32,29 +32,32 @@ static void siftDown(std::vector<int>& a, int i, int n) {
 }
 
 void buildHeapTopDown(std::vector<int> data) {
-    std::cout << "Top-down (ascending) build:" << std::endl;
+    std::cout << "Восходящее построение пирамиды (алгоритм сверху вниз):" << std::endl;
+
     std::vector<int> heap;
     for (int x : data) {
         heap.push_back(x);
-        siftUp(heap, heap.size() - 1);
-        print(heap);
+        siftUp(heap, (int)heap.size() - 1);
+        print(heap); // выводим состояние пирамиды после каждой вставки
     }
 }
 
 void buildHeapBottomUp(std::vector<int> data) {
-    std::cout << "Bottom-up (descending) build:" << std::endl;
-    print(data);
-    for (int i = data.size() / 2 - 1; i >= 0; --i) {
-        siftDown(data, i, data.size());
-        print(data);
-        if (i == 0) break;
+    std::cout << "Нисходящее построение пирамиды (алгоритм снизу вверх):" << std::endl;
+
+    print(data); // исходный массив
+    for (int i = (int)data.size() / 2 - 1; i >= 0; --i) {
+        siftDown(data, i, (int)data.size());
+        print(data); // выводим состояние после каждого siftDown
+        if (i == 0) break; // чтобы не уйти в бесконечный цикл при i-- (для int)
     }
 }
 
 void heapSortChars(const std::string& word) {
     std::vector<char> a(word.begin(), word.end());
-    int n = a.size();
+    int n = (int)a.size();
 
+    // строим max-heap
     for (int i = n / 2 - 1; i >= 0; --i) {
         int j = i;
         while (true) {
@@ -72,6 +75,7 @@ void heapSortChars(const std::string& word) {
         if (i == 0) break;
     }
 
+    // сортировка: переносим максимум в конец и восстанавливаем кучу
     for (int i = n - 1; i > 0; --i) {
         std::swap(a[0], a[i]);
         int j = 0;
@@ -89,7 +93,7 @@ void heapSortChars(const std::string& word) {
         }
     }
 
-    std::cout << "Heap sort result: ";
+    std::cout << "Результат пирамидальной сортировки: ";
     for (char c : a) std::cout << c << " ";
     std::cout << std::endl;
 }
