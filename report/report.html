@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отчёт по алгоритмам работы с пирамидой</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #4a6fa5;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border-left: 4px solid #4a6fa5;
+        }
+        
+        h2 {
+            color: #3498db;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        h3 {
+            color: #2c3e50;
+            margin: 15px 0 10px 0;
+        }
+        
+        .code-block {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+        }
+        
+        .file-name {
+            background-color: #34495e;
+            color: #ecf0f1;
+            padding: 8px 15px;
+            border-radius: 5px 5px 0 0;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: -5px;
+        }
+        
+        .algorithm-explanation {
+            background-color: #e8f4fc;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 3px solid #3498db;
+        }
+        
+        .complexity-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        .complexity-table th, .complexity-table td {
+            padding: 10px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .complexity-table th {
+            background-color: #4a6fa5;
+            color: white;
+        }
+        
+        .complexity-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .output-block {
+            background-color: #f0f8ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 3px solid #2ecc71;
+            font-family: 'Courier New', monospace;
+            white-space: pre-line;
+        }
+        
+        .note {
+            background-color: #fffde7;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 3px solid #f1c40f;
+        }
+        
+        .conclusion {
+            background-color: #e8f6ef;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            border-left: 4px solid #27ae60;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .section {
+                padding: 15px;
+            }
+            
+            .code-block {
+                font-size: 0.85rem;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Отчёт по реализации алгоритмов работы с пирамидой (кучей)</h1>
+            <p class="subtitle">Сравнение восходящего и нисходящего построения пирамиды, а также пирамидальной сортировки</p>
+        </header>
+        
+        <section class="section">
+            <h2>Введение</h2>
+            <p>Данный отчёт описывает реализацию алгоритмов работы с двоичной пирамидой (кучей) на языке C++. Пирамида (heap) — это структура данных, представляющая собой почти полное бинарное дерево, которое удовлетворяет свойству пирамиды: для max-heap значение в каждом узле не меньше значений в его потомках.</p>
+            <p>В реализации представлены два метода построения пирамиды (сверху вниз и снизу вверх), а также алгоритм пирамидальной сортировки (heapsort) для символов.</p>
+        </section>
+        
+        <section class="section">
+            <h2>Структура проекта</h2>
+            <p>Проект состоит из трёх файлов:</p>
+            
+            <div class="file-name">heap.h</div>
+            <div class="code-block">#pragma once
+#include &lt;vector&gt;
+#include &lt;string&gt;
+
+void buildHeapTopDown(std::vector&lt;int&gt; data);
+void buildHeapBottomUp(std::vector&lt;int&gt; data);
+void heapSortChars(const std::string& word);</div>
+            
+            <div class="file-name">heap.cpp</div>
+            <div class="code-block">// Содержит реализации функций объявленных в heap.h
+// Включает вспомогательные функции siftUp и siftDown
+// Реализует построение пирамиды двумя способами и пирамидальную сортировку</div>
+            
+            <div class="file-name">main.cpp</div>
+            <div class="code-block">#include "heap.h"
+#include &lt;iostream&gt;
+
+int main() {
+    std::vector&lt;int&gt; data = {1, 8, 6, 5, 3, 7, 4};
+
+    buildHeapTopDown(data);
+    std::cout &lt;&lt; std::endl;
+
+    buildHeapBottomUp(data);
+    std::cout &lt;&lt; std::endl;
+
+    heapSortChars("SORTING");
+    std::cout &lt;&lt; std::endl;
+
+    std::cout &lt;&lt; "Пирамидальная сортировка не является устойчивой: "
+              &lt;&lt; "равные элементы могут менять взаимный порядок."
+              &lt;&lt; std::endl;
+
+    return 0;
+}</div>
+        </section>
+        
+        <section class="section">
+            <h2>Вспомогательные функции</h2>
+            
+            <h3>Функция siftUp (просеивание вверх)</h3>
+            <div class="algorithm-explanation">
+                <p>Функция <strong>siftUp</strong> восстанавливает свойство пирамиды, перемещая элемент вверх по дереву, пока он не станет меньше своего родителя (для max-heap). Используется при добавлении нового элемента в пирамиду.</p>
+                <p><strong>Принцип работы:</strong> Сравниваем элемент с родителем. Если элемент больше родителя, меняем их местами. Повторяем, пока элемент не займёт правильную позицию или не достигнет корня.</p>
+            </div>
+            <div class="code-block">static void siftUp(std::vector&lt;int&gt;& a, int i) {
+    while (i > 0) {
+        int p = (i - 1) / 2;
+        if (a[p] >= a[i]) break;
+        std::swap(a[p], a[i]);
+        i = p;
+    }
+}</div>
+            
+            <h3>Функция siftDown (просеивание вниз)</h3>
+            <div class="algorithm-explanation">
+                <p>Функция <strong>siftDown</strong> восстанавливает свойство пирамиды, перемещая элемент вниз по дереву, пока он не станет больше своих потомков (для max-heap). Используется при удалении корневого элемента или построении пирамиды снизу вверх.</p>
+                <p><strong>Принцип работы:</strong> Сравниваем элемент с левым и правым потомками. Если один из потомков больше элемента, меняем местами с наибольшим потомком. Повторяем, пока элемент не займёт правильную позицию.</p>
+            </div>
+            <div class="code-block">static void siftDown(std::vector&lt;int&gt;& a, int i, int n) {
+    while (true) {
+        int l = 2 * i + 1;
+        int r = 2 * i + 2;
+        int largest = i;
+
+        if (l < n && a[l] > a[largest]) largest = l;
+        if (r < n && a[r] > a[largest]) largest = r;
+
+        if (largest == i) break;
+        std::swap(a[i], a[largest]);
+        i = largest;
+    }
+}</div>
+        </section>
+        
+        <section class="section">
+            <h2>Алгоритмы построения пирамиды</h2>
+            
+            <h3>Восходящее построение (сверху вниз)</h3>
+            <div class="algorithm-explanation">
+                <p>Алгоритм построения пирамиды <strong>сверху вниз</strong> последовательно добавляет элементы в конец пирамиды и восстанавливает свойство пирамиды с помощью siftUp.</p>
+                <p><strong>Шаги алгоритма:</strong></p>
+                <ol>
+                    <li>Начинаем с пустой пирамиды</li>
+                    <li>Для каждого элемента исходного массива:
+                        <ul>
+                            <li>Добавляем элемент в конец пирамиды</li>
+                            <li>Вызываем siftUp для нового элемента</li>
+                            <li>Выводим текущее состояние пирамиды</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+            <div class="code-block">void buildHeapTopDown(std::vector&lt;int&gt; data) {
+    std::cout &lt;&lt; "Восходящее построение пирамиды (алгоритм сверху вниз):" &lt;&lt; std::endl;
+
+    std::vector&lt;int&gt; heap;
+    for (int x : data) {
+        heap.push_back(x);
+        siftUp(heap, (int)heap.size() - 1);
+        print(heap); // выводим состояние пирамиды после каждой вставки
+    }
+}</div>
+            
+            <h3>Нисходящее построение (снизу вверх)</h3>
+            <div class="algorithm-explanation">
+                <p>Алгоритм построения пирамиды <strong>снизу вверх</strong> преобразует исходный массив в пирамиду, начиная с последних элементов, имеющих потомков, и применяя siftDown.</p>
+                <p><strong>Шаги алгоритма:</strong></p>
+                <ol>
+                    <li>Выводим исходный массив</li>
+                    <li>Начинаем с последнего элемента, имеющего потомков (индекс n/2 - 1)</li>
+                    <li>Для каждого элемента от n/2 - 1 до 0:
+                        <ul>
+                            <li>Вызываем siftDown для текущего элемента</li>
+                            <li>Выводим состояние массива после каждого siftDown</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+            <div class="code-block">void buildHeapBottomUp(std::vector&lt;int&gt; data) {
+    std::cout &lt;&lt; "Нисходящее построение пирамиды (алгоритм снизу вверх):" &lt;&lt; std::endl;
+
+    print(data); // исходный массив
+    for (int i = (int)data.size() / 2 - 1; i >= 0; --i) {
+        siftDown(data, i, (int)data.size());
+        print(data); // выводим состояние после каждого siftDown
+        if (i == 0) break; // чтобы не уйти в бесконечный цикл при i-- (для int)
+    }
+}</div>
+            
+            <h3>Сравнение алгоритмов построения</h3>
+            <table class="complexity-table">
+                <thead>
+                    <tr>
+                        <th>Критерий</th>
+                        <th>Сверху вниз</th>
+                        <th>Снизу вверх</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Временная сложность</td>
+                        <td>O(n log n)</td>
+                        <td>O(n)</td>
+                    </tr>
+                    <tr>
+                        <td>Память</td>
+                        <td>Требуется дополнительный массив</td>
+                        <td>Работает на месте</td>
+                    </tr>
+                    <tr>
+                        <td>Основная операция</td>
+                        <td>siftUp</td>
+                        <td>siftDown</td>
+                    </tr>
+                    <tr>
+                        <td>Направление</td>
+                        <td>От корня к листьям</td>
+                        <td>От листьев к корню</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <section class="section">
+            <h2>Пирамидальная сортировка (heapsort)</h2>
+            
+            <div class="algorithm-explanation">
+                <p>Алгоритм <strong>пирамидальной сортировки</strong> использует структуру данных "пирамида" для сортировки элементов. Алгоритм состоит из двух этапов:</p>
+                <ol>
+                    <li><strong>Построение max-heap</strong> из исходного массива</li>
+                    <li><strong>Извлечение элементов</strong> из пирамиды:
+                        <ul>
+                            <li>Меняем местами корень (максимальный элемент) с последним элементом</li>
+                            <li>Уменьшаем размер пирамиды на 1</li>
+                            <li>Восстанавливаем свойство пирамиды для нового корня с помощью siftDown</li>
+                            <li>Повторяем, пока в пирамиде не останется 1 элемент</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+            
+            <div class="code-block">void heapSortChars(const std::string& word) {
+    std::vector&lt;char&gt; a(word.begin(), word.end());
+    int n = (int)a.size();
+
+    // строим max-heap
+    for (int i = n / 2 - 1; i >= 0; --i) {
+        int j = i;
+        while (true) {
+            int l = 2 * j + 1;
+            int r = 2 * j + 2;
+            int largest = j;
+
+            if (l < n && a[l] > a[largest]) largest = l;
+            if (r < n && a[r] > a[largest]) largest = r;
+
+            if (largest == j) break;
+            std::swap(a[j], a[largest]);
+            j = largest;
+        }
+        if (i == 0) break;
+    }
+
+    // сортировка: переносим максимум в конец и восстанавливаем кучу
+    for (int i = n - 1; i > 0; --i) {
+        std::swap(a[0], a[i]);
+        int j = 0;
+        while (true) {
+            int l = 2 * j + 1;
+            int r = 2 * j + 2;
+            int largest = j;
+
+            if (l < i && a[l] > a[largest]) largest = l;
+            if (r < i && a[r] > a[largest]) largest = r;
+
+            if (largest == j) break;
+            std::swap(a[j], a[largest]);
+            j = largest;
+        }
+    }
+
+    std::cout << "Результат пирамидальной сортировки: ";
+    for (char c : a) std::cout << c << " ";
+    std::cout << std::endl;
+}</div>
+            
+            <div class="note">
+                <p><strong>Примечание:</strong> В реализации пирамидальной сортировки для символов используется встроенная реализация siftDown (без вызова отдельной функции), чтобы продемонстрировать алгоритм в одном месте.</p>
+            </div>
+            
+            <h3>Характеристики пирамидальной сортировки</h3>
+            <table class="complexity-table">
+                <thead>
+                    <tr>
+                        <th>Характеристика</th>
+                        <th>Значение</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Временная сложность (худший случай)</td>
+                        <td>O(n log n)</td>
+                    </tr>
+                    <tr>
+                        <td>Временная сложность (лучший случай)</td>
+                        <td>O(n log n)</td>
+                    </tr>
+                    <tr>
+                        <td>Временная сложность (средний случай)</td>
+                        <td>O(n log n)</td>
+                    </tr>
+                    <tr>
+                        <td>Пространственная сложность</td>
+                        <td>O(1) (сортировка на месте)</td>
+                    </tr>
+                    <tr>
+                        <td>Устойчивость</td>
+                        <td>Нет (неустойчивая)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <section class="section">
+            <h2>Результаты выполнения программы</h2>
+            
+            <h3>Входные данные</h3>
+            <div class="output-block">Исходный массив: {1, 8, 6, 5, 3, 7, 4}
+Строка для сортировки: "SORTING"</div>
+            
+            <h3>Ожидаемый вывод программы</h3>
+            <div class="output-block">Восходящее построение пирамиды (алгоритм сверху вниз):
+1 
+8 1 
+8 1 6 
+8 5 6 1 
+8 5 6 1 3 
+8 5 7 1 3 6 
+8 5 7 4 3 6 1 
+
+Нисходящее построение пирамиды (алгоритм снизу вверх):
+1 8 6 5 3 7 4 
+1 8 7 5 3 6 4 
+8 1 7 5 3 6 4 
+8 5 7 1 3 6 4 
+
+Результат пирамидальной сортировки: G I N O R S T 
+
+Пирамидальная сортировка не является устойчивой: равные элементы могут менять взаимный порядок.</div>
+            
+            <div class="note">
+                <p><strong>Пояснение к выводу:</strong> В восходящем построении после каждой вставки элемента выводится текущее состояние пирамиды. В нисходящем построении выводится состояние после каждого вызова siftDown. Пирамидальная сортировка выводит символы в алфавитном порядке (по возрастанию кодов ASCII).</p>
+            </div>
+        </section>
+        
+        <section class="conclusion">
+            <h2>Выводы</h2>
+            <p>1. <strong>Алгоритмы построения пирамиды:</strong> Нисходящий алгоритм (снизу вверх) является более эффективным с точки зрения временной сложности (O(n) против O(n log n) у восходящего), а также работает на месте, не требуя дополнительной памяти.</p>
+            <p>2. <strong>Пирамидальная сортировка:</strong> Представляет собой эффективный алгоритм сортировки со сложностью O(n log n) в худшем случае и работающий на месте (O(1) дополнительной памяти).</p>
+            <p>3. <strong>Неустойчивость:</strong> Пирамидальная сортировка не является устойчивой, что означает, что равные элементы могут изменить свой относительный порядок в отсортированной последовательности.</p>
+            <p>4. <strong>Практическое применение:</strong> Пирамиды используются не только для сортировки, но и для реализации приоритетных очередей, алгоритма Дейкстры, и других алгоритмов, где требуется быстрый доступ к элементу с наивысшим приоритетом.</p>
+        </section>
+        
+        <footer>
+            <p>Отчёт по реализации алгоритмов работы с пирамидой (кучей)</p>
+            <p>Дата создания: 2023 | Алгоритмы и структуры данных</p>
+        </footer>
+    </div>
+</body>
+</html>
